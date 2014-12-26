@@ -14,7 +14,17 @@ describe 'Application', :application do
     expect { defined? Hangar }.to be_true
     expect {
       require File.expand_path("../../dummy/config/environment", __FILE__)
-    }.to raise_error{Hangar::BadEnvironmentError}
+    }.to_not raise_error{Hangar::BadEnvironmentError}
+  end
+
+  it 'allows environments specified in configuration' do
+    ENV['RACK_ENV'] = 'additional_test_env'
+    ENV['RAILS_ENV'] = 'additional_test_env'
+    expect { defined? Hangar }.to be_true
+    Hangar.acceptable_environments = %w(test additional_test_env)
+    expect {
+      require File.expand_path("../../dummy/config/environment", __FILE__)
+    }.not_to raise_error{Hangar::BadEnvironmentError}
   end
 
   it 'defaults clean_strategy to deletion' do
