@@ -19,7 +19,7 @@ module Hangar
     end
 
     def resource_attributes
-      params.fetch(resource, {}).permit!
+      params.fetch(resource, {})
     end
 
     def includes
