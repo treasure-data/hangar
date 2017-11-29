@@ -3,12 +3,12 @@ module Hangar
     respond_to :json
 
     def create
-      created = FactoryGirl.create resource, resource_attributes
+      created = FactoryBot.create resource, resource_attributes
       render json: created.as_json(include: includes)
     end
 
     def new
-      attributes = FactoryGirl.attributes_for resource, resource_attributes
+      attributes = FactoryBot.attributes_for resource, resource_attributes
       respond_with attributes
     end
 
